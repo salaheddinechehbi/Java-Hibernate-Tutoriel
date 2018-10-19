@@ -1,0 +1,46 @@
+First Add Liberary Of Hibenate And Mysql Driver
+
+@Entity(name="name of the class that going to be use by Hibernate")
+
+@Inheritance(strategy = InheritanceType.JOINED) en cas d'heritage
+
+@Column(name="column name", unique = true, nullable = false, columnDefinition = "int default 100")
+@Id : primary key
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Temporal(TemporalType.DATE)
+@Lob : if we have to write description or an article more than 255 char that we have by default
+
+
+=>  session.get(tableName.class, id) to get an object by id
+
+=> @Table(name="table name", uniqueConstraint = {@uniqueConstraint(columnName= {"columnName"} ) } )
+
+=> @NamedQueries(
+		@NamedQuery("findAll","select * from personne"),
+		@NamedQuery("betweenDate","select * from personne where date between ? and ? ")
+	)
+	session.getNamedQuery("findAll").list();
+=>  between dates
+
+SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+String fromDate= format.parse(from_date);
+String toDate= format.parse(to_date);
+Query query = session.createQuery("FROM Order_headers oh WHERE oh.merchant_code = :merchant_code AND oh.branch_code = :branch_code AND oh.order_date BETWEEN fromDate AND toDate");
+query.setParameter( "fromDate", fromDate);
+query.setParameter( "toDate", toDate ); 
+
+
+=> Insert Date
+	DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+	Date fd = formatter.parse(from_date);
+	java.sql.Date sqlDate = new java.sql.Date(fd.getTime());
+	select1.setDate(1,sqlDate);
+
+
+=>   we have a class Users with attributs id,name,sexe,adresse and adresse has 4 attributscity,street,state,pincode
+	so we have to create another class with name Adresse tha contain al those attributs and we replace 
+	@Entity with @Enbeddable.
+	we do that in case we dont want to create a table Adresse in the database
+
+
+=>  
