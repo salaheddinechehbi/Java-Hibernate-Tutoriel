@@ -161,17 +161,13 @@ public class HibernateGeneral {
 
         
           //Update User
-        List<Users> users = session.createQuery("From Users").list();
-        for(Service s : services){System.out.println(""+s.getNom());}
-        for(Users u : users){System.out.println(""+u.getNom());}
-        uu.setService(services.get(0));
         Voiture v = new Voiture();
         v.setNom("DACIA");
         session.beginTransaction();
         session.save(v);
-        Users u = (Users) session.get(Users.class, 1);
+        Users uu = (Users) session.get(Users.class, 1);
         u.setVoiture(v);
-        session.update(u);
+        session.update(uu);
         session.getTransaction().commit();
         session.close();
         System.out.println(u.getPrenom());
